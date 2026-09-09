@@ -34,6 +34,29 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
   },
   upload: {
     config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        baseUrl: env('R2_PUBLIC_URL'),
+        s3Options: {
+          credentials: {
+            accessKeyId: env('R2_ACCESS_KEY'),
+            secretAccessKey: env('R2_SECRET_ACCESS_KEY'),
+          },
+          region: 'auto',
+          endpoint: `https://${env('R2_ACCOUNT_ID')}.r2.cloudflarestorage.com`,
+          params: {
+            Bucket: env('R2_BUCKET'),
+          },
+        },
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
+      },
+      sizeOptimization: false,
+      responsiveDimensions: false,
+      breakpoints: {},
       security: {
         allowedTypes: allowedMediaTypes,
         deniedTypes,
